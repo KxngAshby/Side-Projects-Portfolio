@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MONKEY MAZE ESCAPE</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="shell">
+    <div class="bezel">
+      <header class="hud">
+        <div class="hud-left">
+          <div class="logo">MONKEY MAZE</div>
+          <div class="objective" id="objective">COLLECT GEMS TO OPEN THE GATE</div>
+        </div>
+        <div class="hud-right">
+          <div class="meter">
+            <span class="label">GEMS</span>
+            <div class="pips" id="gemPips"></div>
+          </div>
+          <div class="meter danger">
+            <span class="label">THREAT</span>
+            <div class="bar"><i id="threatBar"></i></div>
+          </div>
+        </div>
+      </header>
+
+      <div class="stage">
+        <canvas id="game" width="800" height="608" aria-label="Monkey Maze Escape"></canvas>
+        <div id="overlay" class="overlay">
+          <p class="eyebrow" id="eyebrow">TEMPLE RUN PROTOCOL</p>
+          <h1 id="title">MONKEY MAZE</h1>
+          <p id="subtitle">Raid the shrine. Steal every gem. Open the gate. Escape before the temple guardian ends your run.</p>
+          <div class="controls">
+            <span>WASD MOVE</span>
+            <span>SHIFT SPRINT</span>
+            <span>SPACE START</span>
+          </div>
+          <button id="startBtn" type="button">PRESS START</button>
+        </div>
+      </div>
+
+      <footer class="ticker" id="ticker">
+        ALL PATHS CLEAR · GATE NEEDS EVERY GEM · GUARDIAN HUNTS BY SOUND
+      </footer>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
