@@ -24,7 +24,7 @@ Fantasy football with GM payroll mechanics: short game-based contracts tied to l
 ## Operating Context
 
 - Used on phone and desktop browsers during NFL preseason and regular season.
-- League state today lives in the browser (`localStorage`); shared cloud league (one invite = one live room) is planned, not shipped.
+- League state is cloud-backed (Cloudflare D1); one invite = one live room across devices.
 - NFL data via ESPN public scoreboard / box scores (Sync NFL / Auto sync).
 - Shareable concept brief at `/pitch` for group chats.
 - Official production app: https://app.franchisefantasy.workers.dev
@@ -32,15 +32,14 @@ Fantasy football with GM payroll mechanics: short game-based contracts tied to l
 ## Capabilities and Constraints
 
 - Uncapped claimed franchises + commissioner seat (no roster).
-- Access: league invite for owners; PIN-locked commissioner desk; personal team code to return.
+- Access: email sign-in; league invite for owners; creator account is commissioner; multi-league hub.
 - Salary cap $800; defense purchased as one D/ST unit.
 - FA windows: initial FA last week of NFL preseason, freezes 3 days before kickoff, reopens in-season for leftover cap.
-- Contract term by live OVR: 90+ → 2G, 80–89 → 3G, 70–79 → 4G, ≤69 → 5G. Signed deals stay; form changes next FA/re-sign ask.
+- Contract term by live OVR: 90+ → 1G, 80–89 → 2G, 70–79 → 3G, ≤69 → 4G. Signed deals stay; form changes next FA/re-sign ask.
 - Lineup: QB, 2RB, 2WR, TE, FLEX, K, D/ST.
 - Trades: both owners agree, commissioner approves or vetoes.
 - Scoring: ESPN Half-PPR; no simulated weeks.
-- Stack: Next.js on Cloudflare Workers (OpenNext); client league state.
-- Open: multi-device shared league sync not yet available.
+- Stack: Next.js on Cloudflare Workers (OpenNext) + D1 shared league snapshots.
 
 ## Brand Commitments
 

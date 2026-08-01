@@ -12,7 +12,7 @@
 
 ## About This Portfolio
 
-At work I ship internal CTE tools on Google Workspace. On the side I build products that need a different stack: public hosting, real-time sports data, game loops, and (eventually) shared multiplayer state.
+At work I ship internal CTE tools on Google Workspace. On the side I build products that need a different stack: public hosting, real-time sports data, game loops, and shared multiplayer state.
 
 These are **my personal projects**. They are not Dallas ISD systems. The case studies below use the same honesty bar as my work portfolio: what each thing does, what was hard, what worked, what did not, and what I am still learning.
 
@@ -24,7 +24,7 @@ These are **my personal projects**. They are not Dallas ISD systems. The case st
 
 ```mermaid
 flowchart LR
-    OB["Owner's Box"] --> Cloud["Still learning: shared cloud leagues"]
+    OB["Owner's Box"] --> Cloud["Shipped: email auth + D1 cloud leagues"]
     Maze["Monkey Maze Escape"] --> Juice["Game feel + validated levels"]
     OB -.->|"Cursor + ship-to-host habit"| Maze
 ```
@@ -40,52 +40,51 @@ flowchart LR
 
 **What it does**
 
-Invite-only salary-cap franchise fantasy. Owners claim a seat with a league invite, get a private team code to return, and manage an **$800** payroll through public contract offers, ESPN-style lineups, injuries, and commissioner-approved trades. Scoring is ESPN Half-PPR against the **real** NFL slate — no simulated weeks. Commissioners run the desk (invite, market windows, trade oversight) without holding a roster. Shareable concept brief lives at `/pitch`.
+Invite-only salary-cap franchise fantasy with **shared cloud leagues**. Owners sign in with email, create or join a league from a multi-league hub, and manage a **$1000** payroll through public contract offers, ESPN-style lineups, injuries, and commissioner-approved trades. Scoring is ESPN Half-PPR against the **real** NFL slate — no simulated weeks. The league creator runs the commissioner desk. Shareable brief: `/pitch` and `owners-box/ONEPAGER.md`.
 
 **Live**
 
-https://app.franchisefantasy.workers.dev
+https://app.franchisefantasy.workers.dev/login
 
 **Technology**
 
-Next.js · React · TypeScript · Tailwind CSS · ESPN public NFL APIs · client league state (`localStorage`) · Cloudflare Workers (OpenNext)
+Next.js · React · TypeScript · Tailwind CSS · ESPN public NFL APIs · Cloudflare Workers (OpenNext) · Cloudflare D1 (auth, memberships, versioned league snapshots) · server-side `applyLeagueAction` reducer
 
 **Portfolio folder**
 
-- `owners-box/` — product docs (`PRODUCT.md`, one-pager). Full source: [KxngAshby/franchise-football](https://github.com/KxngAshby/franchise-football)
+- `owners-box/` — product docs (`PRODUCT.md`, one-pager HTML/MD). Full source: [KxngAshby/franchise-football](https://github.com/KxngAshby/franchise-football)
 
 **Challenges**
 
 - **Product clarity under a working-title repo.** The folder was `franchise-football`; the brand that had to win the first viewport was **Owner's Box**. Naming and UI had to agree.
-- **Invite-only trust without real accounts.** League invite (new seat), personal team code (return), and commissioner PIN (desk) are three different secrets with three different audiences.
-- **Real NFL weeks, not a sim button.** Sync and auto-sync have to follow ESPN scoreboard / box scores and roll weeks when the slate is final.
-- **"Live" host ≠ shared league.** Deploying to Cloudflare Workers put the app on the public internet, but league state still lived in each browser's `localStorage`. Friends were not in one room.
-- **Private codes leaking into public UI.** Founding a franchise wrote the team code (and earlier, invite / PIN) into the shared activity feed. The live ticker and League feed broadcast that to everyone.
+- **"Live" host ≠ shared league (solved).** The first Workers deploy still kept leagues in `localStorage`. Friends were not in one room until D1 + email auth shipped.
+- **Auth that fits a friends league.** Replaced PIN / team-code login with email codes + invite-only join, while keeping the invite mental model.
+- **Server-authoritative mutations.** Cap, bids, lineups, and trades now go through a shared action reducer so every phone sees the same room.
+- **Private codes leaking into public UI.** Founding a franchise once wrote secrets into the shared activity feed; scrubbing had to cover ticker, League feed, and hydrated history.
 
 **What worked**
 
 - **Cap and contracts as the game surface** — OVR-tied contract lengths, public bidding, D/ST as one unit, commissioner trade gate
-- **Owner vs commissioner as co-equal seats** — desk tools without forcing the commissioner onto a roster
+- **Email identity + invite rooms** — seats follow the account; one invite opens one live league
+- **Multi-league hub** — create, join, and switch leagues without juggling browser storage
 - **Smart auto-sync** — poll harder when games are live; ease off when idle; pause when the tab is hidden
-- **Cloudflare Workers deploy path** — `npm run deploy` via OpenNext; stable workers.dev URL
-- **Demo honesty in product docs** — `PRODUCT.md` states browser-local leagues are fine to try and forbids claiming shared multiplayer until it ships
-- **Defense in depth on secrets** — stop writing codes into new activity; scrub ticker + League feed; scrub stored activity on hydrate so old localStorage rows get cleaned
+- **Cloudflare Workers + D1 deploy path** — `npm run deploy` via OpenNext; stable workers.dev URL
 
 **What did not work**
 
 - **Putting secrets in the activity string** — convenient for the founding owner, catastrophic for a shared feed
-- **Display-only scrub on the ticker first** — incomplete while the League feed still showed raw messages and the live deploy was stale
-- **Calling the Workers URL "live multiplayer"** — the site was live; the league room was not. Hosting and shared state are different problems
+- **Calling the first Workers URL "live multiplayer"** — hosting and shared state are different problems
+- **Browser-local leagues as the product** — fine for demos, useless for a real friends season
 
 **Still learning**
 
-- **Cloud-backed shared leagues** — one invite → one live room across devices (Cloudflare Durable Objects / D1 / similar), without losing the simple invite + team-code mental model
-- **Who can mutate what** — server-side rules so a client cannot invent cap space or peek another owner's team code
-- **Migrating demo leagues** — path from localStorage saves into a real room without confusing playtesters
+- **Production email delivery** — Resend (or verified domain) so login codes hit inboxes instead of a temporary on-screen code
+- **Realtime push** — polling works; Durable Objects / WebSockets would tighten auction races
+- **Hardening** — rate limits, stronger conflict retries, custom domain
 
 **Key takeaway**
 
-Shipping to Cloudflare proved the product UI and NFL sync loop. The next hard problem is shared state — and until that ships, the honest label is **live demo**, not **live league**.
+Shipping the UI to Cloudflare was step one. Shipping **shared cloud leagues** turned Owner's Box from a demo into a product friends can actually play together.
 
 ---
 
@@ -166,10 +165,10 @@ Monkey Maze's flood-fill check is the game equivalent of schema migrations at wo
 
 | Area | Why it matters | Where it shows up |
 |---|---|---|
-| **Shared cloud state on Cloudflare** | Friends leagues need one room, not N browser copies | Owner's Box next chapter |
-| **Server-authoritative rules** | Cap, codes, and bids cannot be trusted to the client alone | Owner's Box |
+| **Realtime sync beyond polling** | Faster auctions / less conflict noise | Owner's Box next polish |
+| **Transactional email in production** | Friends need codes in their inbox | Owner's Box |
 | **Productizing small games** | Craft pieces deserve a URL and a repo, not only a local folder | Monkey Maze Escape |
-| **Scope discipline on side projects** | Easy to chase features (cloud sync, more maps) before the core loop is loved | Both |
+| **Scope discipline on side projects** | Easy to chase features before the core loop is loved | Both |
 | **Writing case studies as I go** | Work portfolio proved reflection compounds; side work needs the same paper trail | This repo |
 
 ---
@@ -178,12 +177,12 @@ Monkey Maze's flood-fill check is the game equivalent of schema migrations at wo
 
 | Practice | Owner's Box | Monkey Maze Escape |
 |---|---|---|
-| **Architecture** | Next.js app + client store + Workers host | Single-page Canvas game |
-| **Data / state** | `localStorage` league + asset cache | In-memory session only |
-| **Deployment** | OpenNext → Cloudflare Workers | Local `index.html` (host pending) |
-| **AI partnership** | Cursor for product, UI, privacy fixes, deploy | Cursor-friendly small surface |
-| **Honesty check** | Explicit "demo until shared sync" | Explicit "craft / single level" |
-| **Forward lesson** | Shared room is the real product gap | Ship URL + validation as defaults |
+| **Architecture** | Next.js + cloud action API + Workers host | Single-page Canvas game |
+| **Data / state** | D1 league snapshots + memberships; client hydrate/poll | In-memory session only |
+| **Deployment** | OpenNext → Cloudflare Workers + D1 | Local `index.html` (host pending) |
+| **AI partnership** | Cursor for product, cloud migrate, docs, deploy | Cursor-friendly small surface |
+| **Honesty check** | Demo until shared sync shipped; then update the pitch | Explicit "craft / single level" |
+| **Forward lesson** | Hosting ≠ multiplayer; ship the room | Ship URL + validation as defaults |
 
 ---
 
@@ -205,7 +204,7 @@ Monkey Maze's flood-fill check is the game equivalent of schema migrations at wo
 | Habit | Side-project expression |
 |---|---|
 | Ship somewhere real | Cloudflare Workers for Owner's Box |
-| Keep secrets out of shared UI | Activity privacy scrub + private team-code surfaces |
+| Keep secrets out of shared UI | Activity privacy scrub; invite codes only where intended |
 | Prefer boring durable hosts when learning | Static HTML for the maze; Workers when the app needs APIs |
 | Document product constraints | `PRODUCT.md` / one-pager before claiming features |
 | Reflect in public | This README — worked / didn't / still learning |
@@ -218,4 +217,4 @@ I design and build every project in this portfolio on my own time. Cursor AI is 
 
 ---
 
-*Personal side-projects portfolio · Last updated July 2026 · Subject to change as I keep shipping*
+*Personal side-projects portfolio · Last updated August 2026 · Subject to change as I keep shipping*

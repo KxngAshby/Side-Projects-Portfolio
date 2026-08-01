@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Owner's Box — One-Pager</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,13 +17,17 @@
       --accent: #7eb8c9;
       --font-display: "Oswald", sans-serif;
       --font-body: "Figtree", sans-serif;
+      --pad-x: clamp(1rem, 4vw, 1.5rem);
     }
 
     * { box-sizing: border-box; }
 
+    html { -webkit-text-size-adjust: 100%; }
+
     body {
       margin: 0;
       min-height: 100vh;
+      min-height: 100dvh;
       color: var(--text);
       font-family: var(--font-body);
       background:
@@ -32,16 +36,20 @@
         linear-gradient(180deg, #101722 0%, #0b1016 48%, #090d12 100%);
     }
 
+    .wrap {
+      padding:
+        max(1.25rem, env(safe-area-inset-top))
+        max(var(--pad-x), env(safe-area-inset-right))
+        max(2.5rem, env(safe-area-inset-bottom))
+        max(var(--pad-x), env(safe-area-inset-left));
+    }
+
     .sheet {
       width: min(720px, 100%);
       margin: 0 auto;
-      padding: 1.75rem 1.5rem 2rem;
+      padding: clamp(1.25rem, 4vw, 1.75rem) clamp(1rem, 3.5vw, 1.5rem) clamp(1.5rem, 4vw, 2rem);
       border: 1px solid var(--line);
       background: linear-gradient(180deg, rgba(22, 29, 40, 0.96), rgba(11, 16, 22, 0.98));
-    }
-
-    .wrap {
-      padding: 2rem 1.25rem 3rem;
     }
 
     .print-tip {
@@ -51,6 +59,7 @@
       border: 1px dashed rgba(126, 184, 201, 0.35);
       color: var(--muted);
       font-size: 0.9rem;
+      line-height: 1.45;
       background: rgba(0, 0, 0, 0.25);
     }
 
@@ -68,7 +77,7 @@
     h1 {
       margin: 0.15rem 0 0;
       font-family: var(--font-display);
-      font-size: clamp(3.2rem, 10vw, 5rem);
+      font-size: clamp(2.6rem, 12vw, 5rem);
       letter-spacing: 0.03em;
       line-height: 0.95;
       color: var(--text);
@@ -80,7 +89,7 @@
       margin: 0.9rem 0 0;
       max-width: 22rem;
       font-family: var(--font-display);
-      font-size: 1.45rem;
+      font-size: clamp(1.25rem, 4.5vw, 1.45rem);
       font-weight: 500;
       letter-spacing: 0.02em;
       line-height: 1.2;
@@ -88,18 +97,18 @@
 
     .deck {
       margin: 0.55rem 0 0;
-      max-width: 32rem;
+      max-width: 36rem;
       color: var(--muted);
-      font-size: 1.08rem;
+      font-size: clamp(1rem, 3.2vw, 1.08rem);
       line-height: 1.55;
     }
 
-    .block { margin-top: 1.5rem; }
+    .block { margin-top: clamp(1.25rem, 4vw, 1.5rem); }
 
     .block h2 {
       margin: 0 0 0.45rem;
       font-family: var(--font-display);
-      font-size: 1.7rem;
+      font-size: clamp(1.4rem, 5vw, 1.7rem);
       letter-spacing: 0.04em;
       font-weight: 500;
     }
@@ -108,6 +117,7 @@
     .block li {
       color: var(--muted);
       line-height: 1.55;
+      font-size: clamp(0.95rem, 2.8vw, 1rem);
     }
 
     .block p { margin: 0; }
@@ -123,7 +133,7 @@
 
     .codes {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 0.65rem;
       margin-top: 0.85rem;
     }
@@ -146,15 +156,45 @@
       display: block;
       margin-top: 0.35rem;
       font-family: var(--font-display);
-      font-size: 1.7rem;
+      font-size: clamp(1.35rem, 5vw, 1.7rem);
       letter-spacing: 0.06em;
       color: var(--accent);
       font-weight: 500;
+      word-break: break-word;
     }
 
     .quiet {
       padding-top: 1.15rem;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .live-link {
+      display: inline-block;
+      margin-top: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(126, 184, 201, 0.35);
+    }
+
+    @media (max-width: 520px) {
+      .codes { grid-template-columns: 1fr; }
+
+      .block ul,
+      .block ol {
+        padding-left: 1rem;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .wrap {
+        padding-top: 2.5rem;
+        padding-bottom: 3.5rem;
+      }
+
+      .sheet {
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      }
     }
 
     @media print {
@@ -179,7 +219,8 @@
 
       h1,
       .eyebrow,
-      .codes strong {
+      .codes strong,
+      .live-link {
         color: #1a4a5c !important;
       }
 
@@ -207,8 +248,8 @@
 <body>
   <div class="wrap">
     <p class="print-tip">
-      To save as PDF: open this file in Chrome/Edge → press <strong>Ctrl+P</strong> → Destination:
-      <strong>Save as PDF</strong> → Save.
+      Phone or desktop: scroll this page, or save as PDF — Chrome/Edge → <strong>Share / Print</strong> →
+      <strong>Save as PDF</strong>.
     </p>
 
     <article class="sheet">
@@ -222,34 +263,46 @@
       <section class="block">
         <h2>The idea</h2>
         <p>
-          Every owner runs a franchise under a <strong>$800 salary cap</strong>. You don’t draft in
+          Every owner runs a franchise under a <strong>$1000 salary cap</strong>. You don’t draft in
           a snake. You shop the open market with <strong>contract offers</strong>, manage payroll,
-          set lineups, and live with short deals that force real roster decisions.
+          set lineups, and live with short deals that force real roster decisions. Weekly scores pay
+          <strong>$0.75 per fantasy point</strong> into a spendable performance bank.
         </p>
+      </section>
+
+      <section class="block">
+        <h2>How you join</h2>
+        <ol>
+          <li>Open the app and <strong>sign in with email</strong>.</li>
+          <li><strong>Create a league</strong> (you’re commissioner) or <strong>join</strong> with an invite.</li>
+          <li>Your seat stays on your account — same live room on any phone.</li>
+        </ol>
       </section>
 
       <section class="block">
         <h2>How you build a team</h2>
         <ul>
           <li>
-            <strong>Invite only</strong> — put in the code, name your club, you’re in. No fixed
-            20-team cap; the league grows with who joins.
+            <strong>Invite only</strong> — share the league invite; friends claim a seat after
+            signing in. No fixed team cap; the league grows with who joins.
           </li>
           <li>
-            <strong>Free agency windows</strong> — main shopping opens the last week of NFL
-            preseason, freezes 3 days before kickoff, then reopens in-season if you still have
-            cap left.
+            <strong>Free agency</strong> — opens last week of NFL preseason, freezes 3 days before
+            kickoff, then reopens in-season. After that, shopping stays open.
           </li>
           <li>
-            <strong>Public offers</strong> — when someone puts money on a player, the league
-            sees it. You can raise. Highest offer wins when the board settles.
+            <strong>Public offers</strong> — rivals see your bid and can raise. Highest offer wins
+            when the board settles.
+          </li>
+          <li>
+            <strong>Pricing</strong> — asks / OVR lean on last season’s Half-PPR PPG (rookies stay
+            cheap). Tap a name for headshot + season stats.
           </li>
           <li>
             <strong>Defense is a unit</strong> — buy one whole D/ST for your franchise.
           </li>
           <li>
-            <strong>Contracts in games</strong> — 90+ OVR → 2G, 80s → 3G, 70s → 4G, under 70 → 5G.
-            Form can bump live OVR and next-deal cost; signed deals stay until they expire.
+            <strong>Contracts in games</strong> — 90+ OVR → 1G, 80s → 2G, 70s → 3G, under 70 → 4G.
           </li>
         </ul>
       </section>
@@ -257,40 +310,44 @@
       <section class="block">
         <h2>How weeks work</h2>
         <p>
-          Scoring is <strong>ESPN Half-PPR</strong>. You set a classic lineup (QB, 2RB, 2WR, TE,
-          FLEX, K, D/ST). There is no “simulate week” button — the app syncs the real NFL
-          scoreboard. When the NFL slate is final, your fantasy week closes.
+          Scoring is <strong>ESPN Half-PPR</strong>. Lineup: QB, 2RB, 2WR, TE, FLEX, K, D/ST. No
+          “simulate week” — the app syncs the real NFL scoreboard.
         </p>
+        <ul>
+          <li>
+            <strong>Lineup hard lock</strong> — Saturday <strong>11:59 PM America/Chicago</strong>.
+            No starter edits until the week finals / unlock.
+          </li>
+          <li>
+            <strong>FA stays open</strong> after lock — new buys are for next week once lineups
+            unlock.
+          </li>
+          <li>
+            <strong>Playoffs</strong> — top 4 after Week 14 → semis Week 15 → championship Week 16.
+          </li>
+        </ul>
       </section>
 
       <section class="block">
-        <h2>What you’ll actually do each week</h2>
+        <h2>What you’ll do each week</h2>
         <ol>
-          <li>Check cap space and injuries.</li>
+          <li>Check cap space, injuries, and other rosters.</li>
           <li>Shop leftover-cap free agents (or sit tight).</li>
-          <li>Set your lineup before kickoff.</li>
+          <li>Set your lineup before Saturday 11:59 PM CT.</li>
           <li>Watch live scores track the NFL.</li>
-          <li>Trade if you dare — both owners agree, commissioner approves.</li>
+          <li>Trade if you dare — both owners + commissioner.</li>
         </ol>
       </section>
 
       <section class="block">
-        <h2>Try the demo</h2>
-        <p>Open the app, choose <strong>Start as owner</strong> or join with an invite:</p>
-        <div class="codes">
-          <div>
-            <span>Invite</span>
-            <strong>FRANCHISE26</strong>
-          </div>
-          <div>
-            <span>Commissioner PIN</span>
-            <strong>COMMISH</strong>
-          </div>
-        </div>
-        <p style="margin-top: 0.85rem;">
-          Demo note: the league currently lives in your browser. Everyone can try the GM flow on
-          their phone; a shared cloud league (one invite = one live room) is the next build.
+        <h2>Play for real</h2>
+        <p>
+          Cloud leagues are live — one invite opens one shared room. Sign in, create or join, then
+          run payroll against the real NFL.
         </p>
+        <a class="live-link" href="https://app.franchisefantasy.workers.dev/login">
+          app.franchisefantasy.workers.dev/login
+        </a>
       </section>
 
       <section class="block quiet">

@@ -6,33 +6,43 @@ Contract offers, cap space, and real NFL weeks — not a snake draft at 8pm.
 
 ## The idea
 
-Every owner runs a franchise under an **$800 salary cap**. There is no snake draft. You shop an open market with **contract offers**, manage payroll, set lineups, and live with short deals that force real roster decisions.
+Every owner runs a franchise under a **$1000 salary cap**. There is no snake draft. You shop an open market with **contract offers**, manage payroll, set lineups, and live with short deals that force real roster decisions. Weekly fantasy points pay **$0.75/pt** into a performance bank.
 
-## How you join
+## How you join (cloud)
 
-- **Invite only** — enter the code, name your club, you’re in.
-- **Uncapped franchises** — no fixed 20-team limit; the league grows with who joins.
-- Demo invite: `FRANCHISE26` · Commissioner PIN: `COMMISH`
+1. Go to **https://app.franchisefantasy.workers.dev/login**
+2. Sign in with your **email** (you get a 6-digit code)
+3. **Create a league** (founder is commissioner) **or join** with the invite code
+4. Your franchise seat stays on your account — any phone, same league room
+
+- **Invite only** — share the league invite; friends claim a seat after signing in
+- **Uncapped franchises** — the league grows with who joins
+- **Multi-league hub** — one email can create/join more than one league
 
 ## How you build a team
 
 1. **Initial free agency** opens the last week of NFL preseason.
-2. Market **freezes 3 days before kickoff**, then **reopens in-season** if you still have cap left.
+2. Market **freezes 3 days before kickoff**, then **reopens in-season** — shopping stays open.
 3. Offers are **public** — rivals can raise. Highest offer wins when the board settles.
-4. Buy offense player-by-player; **defense is one whole unit**.
-5. Live OVR sets next-deal length: **90+ → 2G**, **80–89 → 3G**, **70–79 → 4G**, **≤69 → 5G**. Form moves OVR + ask; signed deals stay until they expire.
+4. **Pricing** leans on last season’s Half-PPR PPG (rookies stay cheap). Click a name for headshot + stats.
+5. Buy offense player-by-player; **defense is one whole unit**.
+6. Live OVR sets next-deal length: **90+ → 1G**, **80–89 → 2G**, **70–79 → 3G**, **≤69 → 4G**.
 
 ## How weeks work
 
 - Scoring: **ESPN Half-PPR**
 - Lineup: QB, 2RB, 2WR, TE, FLEX, K, D/ST
-- No “simulate week” — the app syncs the **real NFL** scoreboard
-- When the NFL slate is final, your fantasy week closes
+- Players lock at their **NFL kickoff**; weekly hard lock Saturday **11:59 PM America/Chicago**
+- Empty starter slots score **0**
+- **FA stays open** after lock — new buys start next week after unlock
+- No “simulate week” — syncs the **real NFL** scoreboard
+- Roster: **16** active + **2** IR
+- **Playoffs:** top 4 after Week 14 → semis Week 15 → championship Week 16
 - Trades need both owners + commissioner approval
 
 ## What you’ll do each week
 
-Check cap + injuries → shop leftover free agents (or don’t) → set lineup → watch live NFL scores → trade if you dare.
+Check cap + injuries → shop (or don’t) → set lineup before Sat 11:59 CT → watch live NFL scores → trade if you dare.
 
 ## Why it hits different
 
@@ -40,4 +50,5 @@ Snake drafts make everyone a GM for one night. Owner's Box makes every waiver, c
 
 ---
 
-**Demo note:** The current build stores league state in your browser. Great for trying the GM experience. Shared live multiplayer sync across everyone’s phones is the next chapter.
+**Live:** https://app.franchisefantasy.workers.dev  
+**Sign in:** `/login` · **My leagues:** `/leagues` · **Pitch:** `/pitch`
