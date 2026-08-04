@@ -26,13 +26,16 @@ These are **my personal projects**. They are not Dallas ISD systems. The case st
 flowchart LR
     OB["Owner's Box"] --> Cloud["Shipped: email auth + D1 cloud leagues"]
     Maze["Monkey Maze Escape"] --> Juice["Game feel + validated levels"]
+    HS["Humbled Servant"] --> PoC["Shipped: visual PoC + Pages demo"]
     OB -.->|"Cursor + ship-to-host habit"| Maze
+    OB -.->|"Wayfinder → spec → PoC"| HS
 ```
 
 | Project | Audience | Core problem / itch |
 |---|---|---|
 | [Owner's Box](#1-owners-box) | Friends running a salary-cap fantasy league | Snake-draft apps ignore payroll; we want contracts, cap, and real NFL weeks |
 | [Monkey Maze Escape](#2-monkey-maze-escape) | Anyone who wants a quick browser maze run | Small craft piece: collect gems, open the gate, outrun a pathfinding guardian |
+| [Humbled Servant](#3-humbled-servant) | Prospective chauffeur-service client / stakeholders | Need a baseline look and reserved-ride flow before architecture deep-dives |
 
 ---
 
@@ -133,6 +136,55 @@ Small games are where I practice feel and algorithms without a product roadmap. 
 
 ---
 
+## 3. Humbled Servant
+
+**What it does**
+
+A **visual proof of concept** for a Dallas–Fort Worth premium **scheduled** black-car chauffeur (Alto-like composure, not Uber). Stakeholders can click through marketing pages and a stubbed reserve flow — hour packages, guest or account entry, pay-now / pay-later — before any real backend or architecture work.
+
+**Live**
+
+https://humbled-servant.pages.dev
+
+**Technology**
+
+Vite · React · TypeScript · React Router · Cloudflare Pages · Satoshi (Fontshare) · localStorage stubs for trips/auth/payment UI
+
+**Portfolio folder**
+
+- `humbled-servant/` — short case pointer. Full source + wayfinder map: [KxngAshby/Humbled-Servant](https://github.com/KxngAshby/Humbled-Servant)
+
+**Challenges**
+
+- **Fog before build.** The ask was “baseline look, then dig into architecture.” Wayfinder decision tickets locked destination, inventory, visual system, and flow **before** pixels.
+- **Quiet brand, not sermon.** Faith/service ethos as undercurrent without reading like a ministry site.
+- **Honest PoC boundaries.** On-site pay UX and account stub had to feel real without claiming a processor or shared backend.
+- **Host naming.** First Workers URL inherited an account subdomain from another project; moved the shareable demo to Pages so the link stays brand-clean.
+
+**What worked**
+
+- **Wayfinder → `spec.md` → PoC** — decisions in one place; build from a locked brief
+- **One shared path** for personal and corporate bookers (Myself / Someone else / Company)
+- **Cloudflare Pages demo** stakeholders can open without my laptop
+- **Equal phone + desktop** care called out in the brief and carried into layout
+
+**What did not work / limits**
+
+- **No real payments or auth** — stubs only; fine for look/feel, not for taking money
+- **Sample prices** — illustrative, not a live rate card
+- **Manual redeploy** until Git-connected Pages is wired for continuous deploy
+
+**Still learning**
+
+- **Client PoC → production path** — custom domain, real booking, processor, when they green-light
+- **Keeping portfolio case studies current** as the product moves past “visual only”
+
+**Key takeaway**
+
+For client-shaped work, **lock the map before the build**. A shareable PoC on a clean URL beats arguing architecture while the look is still fog.
+
+---
+
 ## What I Learned From My Mistakes
 
 ### 1. Hosting is not multiplayer
@@ -168,21 +220,22 @@ Monkey Maze's flood-fill check is the game equivalent of schema migrations at wo
 | **Realtime sync beyond polling** | Faster auctions / less conflict noise | Owner's Box next polish |
 | **Transactional email in production** | Friends need codes in their inbox | Owner's Box |
 | **Productizing small games** | Craft pieces deserve a URL and a repo, not only a local folder | Monkey Maze Escape |
-| **Scope discipline on side projects** | Easy to chase features before the core loop is loved | Both |
+| **Scope discipline on side projects** | Easy to chase features before the core loop is loved | All three |
 | **Writing case studies as I go** | Work portfolio proved reflection compounds; side work needs the same paper trail | This repo |
+| **Decision maps before client builds** | Stakeholders react faster to a locked brief + clickable PoC | Humbled Servant |
 
 ---
 
 ## How My Workflow Evolved (side projects)
 
-| Practice | Owner's Box | Monkey Maze Escape |
-|---|---|---|
-| **Architecture** | Next.js + cloud action API + Workers host | Single-page Canvas game |
-| **Data / state** | D1 league snapshots + memberships; client hydrate/poll | In-memory session only |
-| **Deployment** | OpenNext → Cloudflare Workers + D1 | Local `index.html` (host pending) |
-| **AI partnership** | Cursor for product, cloud migrate, docs, deploy | Cursor-friendly small surface |
-| **Honesty check** | Demo until shared sync shipped; then update the pitch | Explicit "craft / single level" |
-| **Forward lesson** | Hosting ≠ multiplayer; ship the room | Ship URL + validation as defaults |
+| Practice | Owner's Box | Monkey Maze Escape | Humbled Servant |
+|---|---|---|---|
+| **Architecture** | Next.js + cloud action API + Workers host | Single-page Canvas game | Vite + React marketing + reserve stub |
+| **Data / state** | D1 league snapshots + memberships; client hydrate/poll | In-memory session only | localStorage trip stubs |
+| **Deployment** | OpenNext → Cloudflare Workers + D1 | Local `index.html` (host pending) | Cloudflare Pages demo URL |
+| **AI partnership** | Cursor for product, cloud migrate, docs, deploy | Cursor-friendly small surface | Wayfinder map → spec → PoC |
+| **Honesty check** | Demo until shared sync shipped; then update the pitch | Explicit "craft / single level" | Visual PoC; no real pay/backend claimed |
+| **Forward lesson** | Hosting ≠ multiplayer; ship the room | Ship URL + validation as defaults | Lock decisions before architecture |
 
 ---
 
@@ -192,6 +245,7 @@ Monkey Maze's flood-fill check is the game equivalent of schema migrations at wo
 |---|---|---|
 | Owner's Box | `owners-box/` | [KxngAshby/franchise-football](https://github.com/KxngAshby/franchise-football) · [Live](https://app.franchisefantasy.workers.dev) |
 | Monkey Maze Escape | `monkey-maze-escape/` | _this portfolio repo_ (play via `monkey-maze-escape/index.html`) |
+| Humbled Servant | `humbled-servant/` | [KxngAshby/Humbled-Servant](https://github.com/KxngAshby/Humbled-Servant) · [Live](https://humbled-servant.pages.dev) |
 
 **Related**
 
@@ -203,7 +257,7 @@ Monkey Maze's flood-fill check is the game equivalent of schema migrations at wo
 
 | Habit | Side-project expression |
 |---|---|
-| Ship somewhere real | Cloudflare Workers for Owner's Box |
+| Ship somewhere real | Cloudflare Workers for Owner's Box; Pages for Humbled Servant PoC |
 | Keep secrets out of shared UI | Activity privacy scrub; invite codes only where intended |
 | Prefer boring durable hosts when learning | Static HTML for the maze; Workers when the app needs APIs |
 | Document product constraints | `PRODUCT.md` / one-pager before claiming features |
